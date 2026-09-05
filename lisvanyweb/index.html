@@ -49,9 +49,59 @@
 
   </div>
 
+  <div class="gallery-wrap">
+    <div class="gallery-slideshow" id="gallerySlideshow">
+      <!-- Cada <img> es una foto de la galería. Para agregar/quitar fotos,
+           edita este bloque y la lista "images" que carga las imágenes
+           desde la carpeta /images -->
+    </div>
+    <div class="gallery-dots" id="galleryDots"></div>
+  </div>
+
   <div class="footer">
     Oneida 1500, Utica, NY
   </div>
+
+  <script>
+    // Lista de fotos de la galería (coloca los archivos en la carpeta /images)
+    const images = [
+      "images/foto1.jpg",
+      "images/foto2.jpg",
+      "images/foto3.jpg"
+    ];
+
+    const slideshow = document.getElementById('gallerySlideshow');
+    const dotsWrap = document.getElementById('galleryDots');
+    let current = 0;
+
+    images.forEach((src, i) => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.className = 'gallery-slide-img' + (i === 0 ? ' active' : '');
+      slideshow.appendChild(img);
+
+      const dot = document.createElement('span');
+      dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
+      dotsWrap.appendChild(dot);
+    });
+
+    const slides = document.querySelectorAll('.gallery-slide-img');
+    const dots = document.querySelectorAll('.gallery-dot');
+
+    function showSlide(index){
+      slides.forEach(s => s.classList.remove('active'));
+      dots.forEach(d => d.classList.remove('active'));
+      slides[index].classList.add('active');
+      dots[index].classList.add('active');
+      current = index;
+    }
+
+    if(slides.length > 1){
+      setInterval(() => {
+        showSlide((current + 1) % slides.length);
+      }, 3500);
+    }
+  </script>
 
 </body>
 </html>
